@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 90%;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #eee;
+            margin: 5px 0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Management</h2>
+        <input type="text" id="studentName" placeholder="Enter Student Name">
+        <button onclick="addStudent()">Add Student</button>
+        <ul id="studentList"></ul>
+    </div>
+    <script>
+        function addStudent() {
+            let name = document.getElementById('studentName').value.trim();
+            if (!name) {
+                alert("Please enter a student name.");
+                return;
+            }
+            let ul = document.getElementById('studentList');
+            let li = document.createElement('li');
+            li.innerHTML = `${name} <button class='delete-btn' onclick='this.parentElement.remove()'>Remove</button>`;
+            ul.appendChild(li);
+            document.getElementById('studentName').value = "";
+        }
+    </script>
+</body>
+</html>
