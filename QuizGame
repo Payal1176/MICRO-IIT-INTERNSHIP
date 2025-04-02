@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Quiz Game</h2>
+        <p id="question">Loading...</p>
+        <div id="options"></div>
+        <p id="score"></p>
+    </div>
+    <script>
+        const quiz = [
+            { q: "Capital of France?", opts: ["Berlin", "Paris", "Madrid"], ans: "Paris" },
+            { q: "2 + 2 = ?", opts: ["3", "4", "5"], ans: "4" }
+        ];let index = 0, score = 0;
+    
+    function loadQuiz() {
+        if (index < quiz.length) {
+            document.getElementById("question").innerText = quiz[index].q;
+            let optsDiv = document.getElementById("options");
+            optsDiv.innerHTML = "";
+            quiz[index].opts.forEach(opt => {
+                let btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt);
+                optsDiv.appendChild(btn);
+            });
+        } else {
+            document.getElementById("question").innerText = "Quiz Over!";
+            document.getElementById("options").innerHTML = "";
+            document.getElementById("score").innerText = `Your Score: ${score}/${quiz.length}`;
+        }
+    }
+    
+    function checkAnswer(answer) {
+        if (answer === quiz[index].ans) score++;
+        index++;
+        loadQuiz();
+    }
+    
+    loadQuiz();
+</script>
+
+</body>
+</html>
