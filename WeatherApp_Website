@@ -1,1 +1,77 @@
 
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <p>Check the weather of any city easily!</p>
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button onclick="getWeather()">Check Weather</button>
+        <div id="weatherInfo"></div>
+    </div>
+    <script>
+        async function getWeather() {
+            let city = document.getElementById('cityInput').value.trim();
+            if (!city) {
+                alert("Oops! You forgot to enter a city name.");
+                return;
+            }const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeather API Key
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+        
+        try {
+            let response = await fetch(url);
+            let data = await response.json();
+            
+            if (data.cod !== 200) {
+                alert("Uh-oh! City not found. Try again.");
+                return;
+            }
+            
+            document.getElementById('weatherInfo').innerHTML = `
+                <h2>${data.name}, ${data.sys.country}</h2>
+                <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+                <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+                <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+            `;
+        } catch (error) {
+            alert("Hmm... something went wrong. Check your internet connection and try again.");
+        }
+    }
+</script>
+
+</body>
+</html>
